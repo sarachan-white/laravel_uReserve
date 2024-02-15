@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::prefix('manager')
     ->middleware('can:manager-higher')
     ->group(function () {
-        Route::resource('events', EventCollector::class);
+        Route::resource('events', EventController::class);
     });
 
 Route::middleware('can:user-higher')
