@@ -157,6 +157,12 @@ return [
         'name' => '名前',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'event_name' => 'イベント名',
+        'information' => 'イベント詳細',
+        'event_date' => 'イベントの日付',
+        'start_time' => '開始日時',
+        'end_time' => '終了日時',
+        'max_people' => '定員',
     ],
 
 ];
