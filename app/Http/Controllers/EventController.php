@@ -18,7 +18,10 @@ class EventController extends Controller
      */
     public function index()
     {
+        $today = Carbon::today();
+
         $events = DB::table('events')
+            ->whereDate('start_date', '>=', $today)
             ->orderBy('start_date', 'asc')
             ->paginate(10);
 
@@ -137,6 +140,17 @@ class EventController extends Controller
         session()->flash('status', '更新しました。');
 
         return to_route('events.index');
+    }
+
+    public function past()
+    {
+        $today = Carbon::today();
+        $events = DB::table('events')
+            ->whereDate('start_date', '<', $today)
+            ->orderBy('start_date', 'desc')
+            ->paginate(10);
+
+        return view('manager.events.past', compact('events'));
     }
 
     /**
