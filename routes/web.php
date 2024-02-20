@@ -3,6 +3,7 @@
 use App\Http\Controllers\LivewireTestController;
 use App\Http\Controllers\AlpineTestController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
 use Barryvdh\Debugbar\DataCollector\EventCollector;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,9 @@ Route::get('/', function () {
     return view('calendar');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 Route::prefix('manager')
     ->middleware('can:manager-higher')
@@ -34,10 +35,11 @@ Route::prefix('manager')
 
 Route::middleware('can:user-higher')
     ->group(function () {
-        Route::get('index', function () {
-            dd('user');
-        });
+        Route::get('/dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+        Route::get('/{id}', [ReservationController::class, 'detail'])->name('events.detail');
+        Route::post('/{id}', [ReservationController::class, 'reserve'])->name('events.reserve');
     });
+
 
 Route::controller(LivewireTestController::class)
     ->prefix('livewire-test')->name('livewire-test.')->group(function () {
